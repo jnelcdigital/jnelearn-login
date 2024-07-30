@@ -2,21 +2,24 @@
 import { fetchLogin } from "@/lib/api/auth/fetchLogin";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Flex, Form, FormProps, Input } from "antd";
+import { useRouter } from "next/navigation";
+
+type FieldType = {
+  username?: string;
+  password?: string;
+};
 
 const LoginForm = () => {
-  type FieldType = {
-    username?: string;
-    password?: string;
-  };
-
+  const router = useRouter()
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-    console.log("Success:", values);
     const request = {
       username: values.username as string,
       password: values.password as string,
     };
     const result = await fetchLogin(request);
-    console.log('result', result)
+    if (result.message === 'success') {
+      router.push('/user')
+    }
   };
 
   return (
