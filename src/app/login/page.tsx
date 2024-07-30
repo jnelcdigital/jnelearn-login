@@ -1,6 +1,5 @@
 import LoginForm from "@/components/login/LoginForm";
-import { UserOutlined } from "@ant-design/icons";
-import { Card, Flex, Input } from "antd";
+import { Flex } from "antd";
 import Image from "next/image";
 
 const page = () => {
