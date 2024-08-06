@@ -83,7 +83,7 @@ const UsersTable = () => {
           },
         }}
       />
-      <UpdateUserModal record={record} modal={modal} setModal={setModal} />;
+      <UpdateUserModal record={record} modal={modal} setModal={setModal} />
     </Card>
   );
 };

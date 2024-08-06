@@ -2,7 +2,11 @@
 import { fetchLogin } from "@/lib/api/auth/fetchLogin";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Flex, Form, FormProps, Input } from "antd";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { redirect, useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
+import { UserRole } from "@/lib/api/users/user.constant";
 
 type FieldType = {
   username?: string;
@@ -10,16 +14,26 @@ type FieldType = {
 };
 
 const LoginForm = () => {
-  const router = useRouter()
+  const router = useRouter();
+
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     const request = {
       username: values.username as string,
       password: values.password as string,
     };
     const result = await fetchLogin(request);
-    if (result.message === 'success') {
-      router.push('/user')
+    if (result.message === "success") {
+      if (result.data?.role === UserRole.Admin) {
+        localStorage.setItem("user", JSON.stringify(result.data));
+        Cookies.set("jne-cookie", result.data?.accessToken ?? "");
+        router.push("/main");
+      } else {
+        window.location.assign("https://jnelearningcenter.co.id/");
+      }
+      return;
     }
+
+    toast.error(`Error!\n ${result.message}`);
   };
 
   return (
@@ -47,9 +61,13 @@ const LoginForm = () => {
           />
         </Form.Item>
 
+        <Flex justify="flex-end">
+          <Link href={"/forgot-password"}>Forgot password</Link>
+        </Flex>
+
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Login
           </Button>
         </Form.Item>
       </Form>

@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className} style={{padding:0, margin:0}}>
+      <body className={inter.className} style={{ padding: 0, margin: 0 }}>
         <AntdRegistry>{children}</AntdRegistry>
       </body>
     </html>

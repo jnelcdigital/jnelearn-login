@@ -1,16 +1,10 @@
 "use client";
-import {
-  PieChartOutlined,
-  DesktopOutlined,
-  UserOutlined,
-  TeamOutlined,
-  FileOutlined,
-  HomeOutlined,
-} from "@ant-design/icons";
-import { Menu, MenuProps } from "antd";
+import { UserOutlined, HomeOutlined } from "@ant-design/icons";
+import { Button, Flex, Menu, MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -41,6 +35,18 @@ const Sidebar = () => {
     router.push(e.key);
   };
 
+  const handleLogout = ()=>{
+    Cookies.remove('jne-cookie');
+    router.replace('/login')
+  }
+
+  useEffect(() => {
+    const clientToken = Cookies.get("jne-cookie");
+    if (!clientToken) {
+      redirect("/login");
+    }
+  }, []);
+
   return (
     <Sider
       collapsible
@@ -55,6 +61,9 @@ const Sidebar = () => {
         items={items}
         onClick={handleClick}
       />
+      <Flex align="flex-end">
+        <Button onClick={handleLogout}>Logout</Button>
+      </Flex>
     </Sider>
   );
 };

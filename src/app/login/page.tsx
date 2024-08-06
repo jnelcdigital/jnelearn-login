@@ -1,6 +1,8 @@
 import LoginForm from "@/components/login/LoginForm";
 import { Flex } from "antd";
 import Image from "next/image";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const page = () => {
   return (
@@ -32,6 +34,15 @@ const page = () => {
 
         <LoginForm />
       </Flex>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={2500}
+        hideProgressBar={true}
+        theme="colored"
+        className="bg-red whitespace-pre-line"
+        style={{ width: "30%" }}
+      />
     </Flex>
   );
 };

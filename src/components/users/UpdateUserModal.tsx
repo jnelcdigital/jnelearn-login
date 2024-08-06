@@ -6,6 +6,7 @@ import { fetchAddUser } from "@/lib/api/users/fetchAddUser";
 import { User } from "@/lib/api/users/fetchUsers";
 import { fetchUpdateUser } from "@/lib/api/users/fetchUpdateUser";
 import { toast } from "react-toastify";
+import { UserRole } from "@/lib/api/users/user.constant";
 
 interface IAddUserModal {
   modal: boolean;
@@ -130,8 +131,8 @@ const UpdateUserModal = (props: IAddUserModal) => {
           ]}
         >
           <Select>
-            <Select.Option value="ADMIN">Admin</Select.Option>
-            <Select.Option value="USER">User</Select.Option>
+            <Select.Option value={UserRole.Admin}>Admin</Select.Option>
+            <Select.Option value={UserRole.User}>User</Select.Option>
           </Select>
         </Form.Item>
 

@@ -7,18 +7,10 @@ interface Request {
   password: string;
 }
 
-interface Response {
-  id: number;
-  nama_cabang: string;
-  kode_cabang: string;
-  role: string;
-  accessToken: string;
-}
-
-export const fetchLogin = async (
+export const fetchForgotPassword = async (
   requst: Request
-): Promise<IBaseApiResponse<Response | null>> => {
-  const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/login`;
+): Promise<IBaseApiResponse<boolean | null>> => {
+  const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/forgot-password`;
   try {
     const { data } = await jneAxios().post(url, requst);
     return data;

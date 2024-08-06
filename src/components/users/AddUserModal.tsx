@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { userQueryClient } from "./UserProvider";
 import { fetchAddUser } from "@/lib/api/users/fetchAddUser";
 import { toast } from "react-toastify";
+import { UserRole } from "@/lib/api/users/user.constant";
 
 interface IAddUserModal {
   modal: boolean;
@@ -119,8 +120,8 @@ const AddUserModal = (props: IAddUserModal) => {
           ]}
         >
           <Select>
-            <Select.Option value="ADMIN">Admin</Select.Option>
-            <Select.Option value="USER">User</Select.Option>
+            <Select.Option value={UserRole.Admin}>Admin</Select.Option>
+            <Select.Option value={UserRole.User}>User</Select.Option>
           </Select>
         </Form.Item>
 
