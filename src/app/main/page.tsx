@@ -6,7 +6,6 @@ const Main = () => {
   const [namaCabang, setNamaCabang] = useState("");
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") ?? "");
-    console.log('user',user)
     setNamaCabang(user.nama_cabang);
   }, []);
   return (

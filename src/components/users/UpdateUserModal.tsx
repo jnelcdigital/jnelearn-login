@@ -2,7 +2,6 @@
 import { Button, Form, FormProps, Input, Modal, Select } from "antd";
 import { Dispatch, SetStateAction, memo, useEffect } from "react";
 import { userQueryClient } from "./UserProvider";
-import { fetchAddUser } from "@/lib/api/users/fetchAddUser";
 import { User } from "@/lib/api/users/fetchUsers";
 import { fetchUpdateUser } from "@/lib/api/users/fetchUpdateUser";
 import { toast } from "react-toastify";
@@ -59,10 +58,10 @@ const UpdateUserModal = (props: IAddUserModal) => {
   };
 
   useEffect(() => {
-    return () => {
-      form.resetFields();
-    };
-  }, [record]);
+    form.setFieldsValue(record)
+  }, [record])
+  
+  
 
   return (
     <Modal
@@ -92,7 +91,6 @@ const UpdateUserModal = (props: IAddUserModal) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-        initialValues={record}
       >
         <Form.Item
           label="Nama Cabang"

@@ -1,6 +1,11 @@
 "use client";
-import { UserOutlined, HomeOutlined } from "@ant-design/icons";
-import { Button, Flex, Menu, MenuProps } from "antd";
+import {
+  UserOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+  ExclamationCircleFilled,
+} from "@ant-design/icons";
+import { Button, Flex, Menu, MenuProps, Modal } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,20 +30,34 @@ function getItem(
 const items: MenuItem[] = [
   getItem("Dashboard", "/main", <HomeOutlined />),
   getItem("Users", "/main/user", <UserOutlined />),
+  getItem("Logut", "logout", <LogoutOutlined />),
 ];
 
 const Sidebar = () => {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
+  const { confirm } = Modal;
 
   const handleClick: MenuProps["onClick"] = (e) => {
-    router.push(e.key);
+    if (e.key !== "logout") {
+      router.push(e.key);
+      return;
+    }
+
+    confirm({
+      title: "Do you want to delete these items?",
+      icon: <ExclamationCircleFilled />,
+      content: "Some descriptions",
+      onOk() {
+        handleLogout();
+      },
+    });
   };
 
-  const handleLogout = ()=>{
-    Cookies.remove('jne-cookie');
-    router.replace('/login')
-  }
+  const handleLogout = () => {
+    Cookies.remove("jne-cookie");
+    router.replace("/login");
+  };
 
   useEffect(() => {
     const clientToken = Cookies.get("jne-cookie");
@@ -52,6 +71,7 @@ const Sidebar = () => {
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
+      className="relative"
     >
       <div className="demo-logo-vertical" />
       <Menu
@@ -61,9 +81,6 @@ const Sidebar = () => {
         items={items}
         onClick={handleClick}
       />
-      <Flex align="flex-end">
-        <Button onClick={handleLogout}>Logout</Button>
-      </Flex>
     </Sider>
   );
 };

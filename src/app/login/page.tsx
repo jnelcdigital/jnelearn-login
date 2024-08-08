@@ -15,23 +15,10 @@ const page = () => {
       align="center"
     >
       <Flex
-        style={{ backgroundColor: "white", width: "30%", borderRadius: "8px" }}
+        className="bg-white w-1/4 rounded-lg pt-12 pb-6 bg-opacity-95"
         align="center"
         vertical
       >
-        <Image
-          src={"/images/banner-login.jpg"}
-          alt="banner login"
-          width={100}
-          height={100}
-          style={{
-            width: "100%",
-            height: "60%",
-            borderTopLeftRadius: "8px",
-            borderTopRightRadius: "8px",
-          }}
-        />
-
         <LoginForm />
       </Flex>
 

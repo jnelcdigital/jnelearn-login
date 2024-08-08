@@ -37,8 +37,8 @@ const LoginForm = () => {
   };
 
   return (
-    <Flex className="w-full py-5" justify="center">
-      <Form className="w-1/2" onFinish={onFinish} autoComplete="off">
+    <Flex className="w-full" justify="center">
+      <Form className="w-3/4" onFinish={onFinish} autoComplete="off">
         <Form.Item<FieldType>
           name="username"
           rules={[{ required: true, message: "Please input your username!" }]}
@@ -61,12 +61,12 @@ const LoginForm = () => {
           />
         </Form.Item>
 
-        <Flex justify="flex-end">
+        <Flex justify="flex-end" className="mb-6">
           <Link href={"/forgot-password"}>Forgot password</Link>
         </Flex>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+          <Button type="primary" htmlType="submit" className="w-full">
             Login
           </Button>
         </Form.Item>
