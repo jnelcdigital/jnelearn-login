@@ -45,9 +45,8 @@ const Sidebar = () => {
     }
 
     confirm({
-      title: "Do you want to delete these items?",
+      title: "Are you sure want to logout?",
       icon: <ExclamationCircleFilled />,
-      content: "Some descriptions",
       onOk() {
         handleLogout();
       },
@@ -73,7 +72,6 @@ const Sidebar = () => {
       onCollapse={(value) => setCollapsed(value)}
       className="relative"
     >
-      <div className="demo-logo-vertical" />
       <Menu
         theme="dark"
         defaultSelectedKeys={["/main"]}
