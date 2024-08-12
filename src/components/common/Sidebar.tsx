@@ -70,7 +70,7 @@ const Sidebar = () => {
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
-      className="relative"
+      className="relative min-h-screen"
     >
       <Menu
         theme="dark"
