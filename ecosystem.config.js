@@ -9,7 +9,7 @@ module.exports = {
       autorestart: true,
       watch: false,
       env: {
-        NODE_ENV: "dev",
+        NODE_ENV: "production",
         PORT: PORT,
       },
     },
