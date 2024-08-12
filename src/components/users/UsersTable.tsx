@@ -1,14 +1,17 @@
 "use client";
 import { User, fetchUsers } from "@/lib/api/users/fetchUsers";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Card, Flex, Input, Table, TableProps } from "antd";
+import { Button, Card, Flex, Input, Modal, Table, TableProps } from "antd";
 import { ChangeEvent, memo, useRef, useState } from "react";
 import UpdateUserModal from "./UpdateUserModal";
-import { SearchOutlined } from "@ant-design/icons";
+import { ExclamationCircleFilled, SearchOutlined } from "@ant-design/icons";
 import { userQueryClient } from "./UserProvider";
+import { fetchDeleteUser } from "@/lib/api/users/fetchDeleteUser";
+import { toast } from "react-toastify";
 
 const UsersTable = () => {
   const timeout = useRef<any>(null);
+  const { confirm } = Modal;
   const [modal, setModal] = useState(false);
   const [record, setRecord] = useState<User>();
   const [filter, setFilter] = useState({
@@ -17,7 +20,7 @@ const UsersTable = () => {
     nama_cabang: "",
   });
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     refetchOnWindowFocus: false,
     queryKey: ["fetchUserQuery", filter],
     queryFn: async () => {
@@ -50,6 +53,28 @@ const UsersTable = () => {
     );
   };
 
+  const handleDelete = (record: User) => {
+    confirm({
+      title: "Are you sure want to delete?",
+      icon: <ExclamationCircleFilled />,
+      onOk() {
+        deleteUser(record.id);
+      },
+    });
+  };
+
+  const deleteUser = async (id: number) => {
+    const result = await fetchDeleteUser(id);
+
+    if (result.data) {
+      refetch();
+      toast.success("User berhasil dihapus");
+      return;
+    }
+
+    toast.error(`Error!\n ${result.message}`);
+  };
+
   const columns: TableProps<User>["columns"] = [
     {
       title: "Nama Cabang",
@@ -70,14 +95,25 @@ const UsersTable = () => {
       title: "Action",
       key: "action",
       render: (_, record) => (
-        <Button
-          type="link"
-          onClick={() => {
-            action(record);
-          }}
-        >
-          Edit
-        </Button>
+        <Flex>
+          <Button
+            type="link"
+            onClick={() => {
+              action(record);
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            type="link"
+            danger
+            onClick={() => {
+              handleDelete(record);
+            }}
+          >
+            Delete
+          </Button>
+        </Flex>
       ),
     },
   ];
